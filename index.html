@@ -264,10 +264,9 @@
     }
     .rating-btn:hover {
       border-color: var(--cyan);
-      background: rgba(0 212 245 / 0.10);
+      background: rgba(240 212 236 / 0.10);
     }
-    .rating-btn.has-value          { color: var(--cyan); border-color: rgba(0 212 245 / 0.45); }
-    .rating-btn.col-score.has-value{ color: var(--pink); border-color: rgba(255 45 120 / 0.45); }
+    .rating-btn.has-value { color: var(--cyan); border-color: rgba(240 212 236 / 0.45); }
 
     /* ── Popup ── */
     .rating-popup {
@@ -305,8 +304,8 @@
       cursor: pointer;
       transition: background 0.15s, border-color 0.15s, transform 0.1s;
     }
-    .pop-num:hover { background: rgba(0 212 245 / 0.18); border-color: var(--cyan); transform: scale(1.07); }
-    .pop-num.active { background: rgba(0 212 245 / 0.25); border-color: var(--cyan); color: var(--cyan); }
+    .pop-num:hover { background: rgba(240 212 236 / 0.18); border-color: var(--cyan); transform: scale(1.07); }
+    .pop-num.active { background: rgba(240 212 236 / 0.25); border-color: var(--cyan); color: var(--cyan); }
 
     .popup-divider {
       border: none; border-top: 1px solid rgba(255 255 255 / 0.08);
@@ -506,7 +505,7 @@
       transition: border-color 0.15s, background 0.15s;
       white-space: nowrap;
     }
-    .pick-btn:hover { border-color: var(--cyan); background: rgba(0 212 245 / 0.10); color: var(--text); }
+    .pick-btn:hover { border-color: var(--cyan); background: rgba(240 212 236 / 0.10); color: var(--text); }
     .pick-btn.has-value { color: var(--text); border-color: rgba(255 255 255 / 0.32); }
     .winner-row .pick-btn { border-color: rgba(255 215 0 / 0.35); }
     .winner-row .pick-btn:hover { border-color: var(--gold); background: rgba(255 215 0 / 0.10); }
@@ -573,7 +572,7 @@
     }
     .cpicker-item:last-child { border-bottom: none; }
     .cpicker-item:hover { background: rgba(255 255 255 / 0.07); }
-    .cpicker-item.selected { background: rgba(0 212 245 / 0.12); }
+    .cpicker-item.selected { background: rgba(240 212 236 / 0.12); }
     .winner-mode .cpicker-item.selected { background: rgba(255 215 0 / 0.12); }
 
     .cpicker-num  { font-size: 10px; color: var(--text-dim); font-weight: 700; min-width: 22px; }
@@ -1045,26 +1044,32 @@
   const EMOJI_FONT = '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
   const TEXT_FONT  = '"Segoe UI",system-ui,sans-serif';
 
-  function canvasBg(ctx, W, H, pinkLeft) {
-    const g = ctx.createLinearGradient(0, 0, W, H);
-    g.addColorStop(0, '#1d0a48'); g.addColorStop(0.6, '#2d0d5e'); g.addColorStop(1, '#150830');
-    ctx.fillStyle = g;
+  function canvasBg(ctx, W, H) {
+    ctx.fillStyle = '#150830';
     ctx.fillRect(0, 0, W, H);
-    const a = ctx.createRadialGradient(pinkLeft ? 0 : W, 0, 0, pinkLeft ? 0 : W, 0, W * 0.7);
-    a.addColorStop(0, pinkLeft ? 'rgba(255,148,198,0.22)' : 'rgba(130,215,255,0.18)');
-    a.addColorStop(1, 'transparent');
-    ctx.fillStyle = a;
-    ctx.fillRect(0, 0, W, H);
+    [
+      { x: -W * 0.05, y: -H * 0.06, r: W * 0.82, c0: 'rgba(255,148,198,0.55)', c1: 'rgba(235,110,170,0.18)' },
+      { x:  W * 1.05, y: -H * 0.06, r: W * 0.74, c0: 'rgba(130,215,255,0.50)', c1: 'rgba(100,185,245,0.14)' },
+      { x:  W * 0.45, y:  H * 0.42, r: W * 0.65, c0: 'rgba(165,108,238,0.30)', c1: 'transparent'            },
+    ].forEach(({ x, y, r, c0, c1 }) => {
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, c0); g.addColorStop(0.45, c1); g.addColorStop(1, 'transparent');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    });
   }
 
   function canvasHeader(ctx, W, PAD, subtitle, title) {
-    ctx.globalAlpha = 0.35; ctx.fillStyle = '#ffffff';
-    ctx.font = `12px ${TEXT_FONT}`;
+    ctx.globalAlpha = 0.38; ctx.fillStyle = '#ffffff';
+    ctx.font = `11px ${TEXT_FONT}`;
     ctx.fillText(subtitle, PAD, 30);
-    ctx.globalAlpha = 1; ctx.fillStyle = '#ffffff';
-    ctx.font = `bold 28px ${TEXT_FONT}`;
-    ctx.fillText(title, PAD, 62);
-    ctx.globalAlpha = 0.12; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1;
+
+    const tg = ctx.createLinearGradient(PAD, 0, PAD + 320, 0);
+    tg.addColorStop(0, '#f0d4ec'); tg.addColorStop(0.48, '#ffffff'); tg.addColorStop(1, '#ff2d78');
+    ctx.globalAlpha = 1; ctx.fillStyle = tg;
+    ctx.font = `bold 30px ${TEXT_FONT}`;
+    ctx.fillText(title, PAD, 64);
+
+    ctx.globalAlpha = 0.10; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(PAD, 80); ctx.lineTo(W - PAD, 80); ctx.stroke();
     ctx.globalAlpha = 1;
   }
@@ -1081,104 +1086,161 @@
       .sort((a, b) => b.total - a.total);
     if (!ranked.length) { alert('Додайте оцінки, щоб згенерувати зображення'); return; }
 
-    const SC = 2, W = 580, PAD = 28, ROW = 54, HDR = 102, FOOT = 28;
-    const H = HDR + ranked.length * ROW + FOOT;
+    const SC = 2, W = 660, PAD = 18, HDR = 100, FOOT = 24;
+    const COLS = 3, GAP = 6, ROW = 50;
+    const colW = Math.floor((W - PAD * 2 - GAP * (COLS - 1)) / COLS);
+    const rows = Math.ceil(ranked.length / COLS);
+    const H = HDR + rows * ROW + FOOT;
+
     const cv = document.createElement('canvas');
     cv.width = W * SC; cv.height = H * SC;
     const ctx = cv.getContext('2d');
     ctx.scale(SC, SC);
 
-    canvasBg(ctx, W, H, true);
+    canvasBg(ctx, W, H);
     canvasHeader(ctx, W, PAD, 'EUROVISION 2026 · ВІДЕНЬ', 'МІЙ РЕЙТИНГ');
 
     const MEDALS = ['🥇','🥈','🥉'];
-    ranked.forEach((c, pos) => {
-      const y = HDR + pos * ROW, cy = y + ROW / 2;
-      if (pos % 2 === 0) { ctx.fillStyle = 'rgba(255,255,255,0.035)'; ctx.fillRect(0, y, W, ROW); }
 
-      if (pos < 3) {
-        ctx.globalAlpha = 1;
-        ctx.font = `20px ${EMOJI_FONT}`; ctx.fillText(MEDALS[pos], PAD - 2, cy + 7);
-      } else {
-        ctx.globalAlpha = 0.32; ctx.fillStyle = '#ffffff'; ctx.font = `bold 12px ${TEXT_FONT}`;
-        ctx.fillText(`${pos + 1}.`, PAD + 2, cy + 5);
-      }
+    function fitText(text, maxW) {
+      ctx.font = `bold 12px ${TEXT_FONT}`;
+      if (ctx.measureText(text).width <= maxW) return text;
+      let t = text;
+      while (t.length > 0 && ctx.measureText(t + '…').width > maxW) t = t.slice(0, -1);
+      return t + '…';
+    }
+
+    ranked.forEach((c, pos) => {
+      const col   = pos % COLS;
+      const row   = Math.floor(pos / COLS);
+      const cardX = PAD + col * (colW + GAP);
+      const cardY = HDR + row * ROW;
+      const mid   = cardY + ROW / 2;
 
       ctx.globalAlpha = 1;
-      ctx.font = `22px ${EMOJI_FONT}`; ctx.fillText(c.flag, PAD + 36, cy + 8);
-      ctx.fillStyle = '#ffffff'; ctx.font = `bold 15px ${TEXT_FONT}`; ctx.fillText(c.name, PAD + 74, cy + 1);
-      ctx.globalAlpha = 0.42; ctx.fillStyle = '#ffffff'; ctx.font = `12px ${TEXT_FONT}`; ctx.fillText(c.artist, PAD + 74, cy + 17);
-      ctx.globalAlpha = 1; ctx.fillStyle = '#ff2d78'; ctx.font = `bold 22px ${TEXT_FONT}`;
+      ctx.fillStyle = 'rgba(255,255,255,0.06)';
+      ctx.fillRect(cardX, cardY + 2, colW, ROW - 4);
+
+      if (pos < 3) {
+        ctx.globalAlpha = 1; ctx.fillStyle = '#ffffff';
+        ctx.font = `17px ${EMOJI_FONT}`;
+        ctx.fillText(MEDALS[pos], cardX + 7, mid + 7);
+      } else {
+        ctx.globalAlpha = 0.32; ctx.fillStyle = '#ffffff';
+        ctx.font = `bold 11px ${TEXT_FONT}`;
+        ctx.fillText(`${pos + 1}.`, cardX + 9, mid + 4);
+      }
+
+      ctx.globalAlpha = 1; ctx.fillStyle = '#ffffff';
+      ctx.font = `18px ${EMOJI_FONT}`;
+      ctx.fillText(c.flag, cardX + 32, mid + 7);
+
+      const scoreReserve = 32;
+      const nameMaxW = colW - 56 - scoreReserve - 4;
+      ctx.fillStyle = '#ffffff'; ctx.font = `bold 12px ${TEXT_FONT}`;
+      ctx.fillText(fitText(c.name, nameMaxW), cardX + 56, mid + 5);
+
+      ctx.fillStyle = '#f0d4ec'; ctx.font = `bold 16px ${TEXT_FONT}`;
       const sw = ctx.measureText(String(c.total)).width;
-      ctx.fillText(String(c.total), W - PAD - sw, cy + 8);
+      ctx.fillText(String(c.total), cardX + colW - 6 - sw, mid + 6);
     });
 
+    ctx.globalAlpha = 1;
     dlCanvas(cv, 'my-rating-esc2026.png');
   }
 
   function generatePicksImage() {
+    const SC = 2, W = 580, PAD = 26, HDR = 102, FOOT = 28;
+    const LABEL_W = 155, COL_GAP = 16;
+    const VAL_X = PAD + LABEL_W + COL_GAP;
+    const SINGLE_H = 58, ITEM_H = 30;
+
     let contentH = 0;
     PICK_DEFS.forEach(def => {
-      contentH += 28;
-      if (def.multi) contentH += Math.max(1, (picks[def.id] || []).length) * 34 + 4;
-      else           contentH += 38;
-      contentH += 18;
+      if (def.multi) contentH += Math.max(SINGLE_H, Math.max(1, (picks[def.id] || []).length) * ITEM_H + 16);
+      else           contentH += SINGLE_H;
     });
 
-    const SC = 2, W = 580, PAD = 28, HDR = 102, FOOT = 28;
     const H = HDR + contentH + FOOT;
     const cv = document.createElement('canvas');
     cv.width = W * SC; cv.height = H * SC;
     const ctx = cv.getContext('2d');
     ctx.scale(SC, SC);
 
-    canvasBg(ctx, W, H, false);
-    canvasHeader(ctx, W, PAD, 'EUROVISION 2026 · ВІДЕНЬ', 'ОТЖЕ');
+    canvasBg(ctx, W, H);
+    canvasHeader(ctx, W, PAD, 'EUROVISION 2026 · ВІДЕНЬ', 'МОЇ ПІДСУМКИ');
 
-    let y = HDR + 12;
-    PICK_DEFS.forEach(def => {
-      ctx.globalAlpha = 0.42; ctx.fillStyle = '#ffffff';
-      ctx.font = `italic bold 10px ${TEXT_FONT}`;
-      ctx.fillText(def.label + ':', PAD, y);
-      ctx.globalAlpha = 1;
-      y += 22;
+    // Vertical column separator
+    const sepX = PAD + LABEL_W + COL_GAP / 2;
+    ctx.globalAlpha = 0.10; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(sepX, HDR + 6); ctx.lineTo(sepX, H - FOOT); ctx.stroke();
 
+    let y = HDR + 4;
+    PICK_DEFS.forEach((def, di) => {
+      const val = picks[def.id];
+      const isWinner = !!def.winner;
+      const rowH = def.multi
+        ? Math.max(SINGLE_H, Math.max(1, (val || []).length) * ITEM_H + 16)
+        : SINGLE_H;
+
+      if (isWinner) {
+        ctx.globalAlpha = 0.06; ctx.fillStyle = '#ffd700';
+        ctx.fillRect(0, y, W, rowH);
+      }
+
+      // Label — top-aligned for multi, centered for single
+      const labelY = def.multi ? y + 15 : y + rowH / 2 + 4;
+      ctx.globalAlpha = isWinner ? 0.80 : 0.38;
+      ctx.fillStyle = isWinner ? '#ffd700' : '#ffffff';
+      ctx.font = `italic bold 8.5px ${TEXT_FONT}`;
+      ctx.fillText(def.label + ':', PAD, labelY);
+
+      // Value (right column)
       if (def.multi) {
-        const arr = picks[def.id] || [];
+        const arr = val || [];
         if (!arr.length) {
-          ctx.globalAlpha = 0.22; ctx.fillStyle = '#ffffff'; ctx.font = `14px ${TEXT_FONT}`;
-          ctx.fillText('— не обрано —', PAD + 4, y + 8); y += 34;
+          ctx.globalAlpha = 0.20; ctx.fillStyle = '#ffffff';
+          ctx.font = `12px ${TEXT_FONT}`;
+          ctx.fillText('— не обрано —', VAL_X, y + rowH / 2 + 4);
         } else {
-          arr.forEach(i => {
+          arr.forEach((i, idx) => {
             const c = COUNTRIES[i];
-            ctx.globalAlpha = 1;
-            ctx.font = `18px ${EMOJI_FONT}`; ctx.fillText(c.flag, PAD, y + 4);
-            ctx.fillStyle = '#ffffff'; ctx.font = `bold 14px ${TEXT_FONT}`; ctx.fillText(c.name, PAD + 30, y + 2);
-            ctx.globalAlpha = 0.38; ctx.fillStyle = '#ffffff'; ctx.font = `11px ${TEXT_FONT}`; ctx.fillText(c.artist, PAD + 30, y + 16);
-            y += 34;
+            const iy = y + 8 + idx * ITEM_H, mid = iy + ITEM_H / 2;
+            ctx.globalAlpha = 1; ctx.fillStyle = '#ffffff';
+            ctx.font = `15px ${EMOJI_FONT}`; ctx.fillText(c.flag, VAL_X, mid + 6);
+            ctx.fillStyle = '#ffffff'; ctx.font = `bold 12px ${TEXT_FONT}`;
+            ctx.fillText(c.name, VAL_X + 24, mid + 4);
+            const nameW = ctx.measureText(c.name).width;
+            ctx.globalAlpha = 0.32; ctx.fillStyle = '#ffffff';
+            ctx.font = `10px ${TEXT_FONT}`; ctx.fillText(c.artist, VAL_X + 24 + nameW + 8, mid + 4);
           });
         }
       } else {
-        const val = picks[def.id];
+        const mid = y + rowH / 2;
         if (val == null || val === '') {
-          ctx.globalAlpha = 0.22; ctx.fillStyle = '#ffffff'; ctx.font = `14px ${TEXT_FONT}`;
-          ctx.fillText('— не обрано —', PAD + 4, y + 8);
+          ctx.globalAlpha = 0.20; ctx.fillStyle = '#ffffff';
+          ctx.font = `12px ${TEXT_FONT}`;
+          ctx.fillText('— не обрано —', VAL_X, mid + 4);
         } else {
           const c = COUNTRIES[val];
-          ctx.globalAlpha = 1;
-          ctx.font = `22px ${EMOJI_FONT}`; ctx.fillText(c.flag, PAD, y + 8);
-          ctx.fillStyle = def.winner ? '#ffd700' : '#ffffff';
-          ctx.font = `bold ${def.winner ? 18 : 15}px ${TEXT_FONT}`; ctx.fillText(c.name, PAD + 34, y + 4);
-          ctx.globalAlpha = 0.38; ctx.fillStyle = '#ffffff'; ctx.font = `11px ${TEXT_FONT}`; ctx.fillText(c.artist, PAD + 34, y + 19);
+          ctx.globalAlpha = 1; ctx.fillStyle = '#ffffff';
+          ctx.font = `22px ${EMOJI_FONT}`; ctx.fillText(c.flag, VAL_X, mid + 8);
+          ctx.fillStyle = isWinner ? '#ffd700' : '#ffffff';
+          ctx.font = `bold ${isWinner ? 15 : 14}px ${TEXT_FONT}`;
+          ctx.fillText(c.name, VAL_X + 32, mid + 1);
+          ctx.globalAlpha = 0.36; ctx.fillStyle = '#ffffff';
+          ctx.font = `10px ${TEXT_FONT}`; ctx.fillText(c.artist, VAL_X + 32, mid + 14);
         }
-        y += 38;
       }
 
-      ctx.globalAlpha = 0.07; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(PAD, y + 4); ctx.lineTo(W - PAD, y + 4); ctx.stroke();
-      y += 18;
+      y += rowH;
+      if (di < PICK_DEFS.length - 1) {
+        ctx.globalAlpha = 0.08; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 0.5;
+        ctx.beginPath(); ctx.moveTo(PAD, y); ctx.lineTo(W - PAD, y); ctx.stroke();
+      }
     });
 
+    ctx.globalAlpha = 1;
     dlCanvas(cv, 'my-picks-esc2026.png');
   }
 
