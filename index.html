@@ -393,20 +393,11 @@
       margin-top: 28px;
     }
 
-    .section-title {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 14px;
-      padding-left: 2px;
-    }
-
     .rankings-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
       gap: 8px;
+      padding: 16px 18px 18px;
     }
 
     .rank-card {
@@ -446,9 +437,183 @@
     .rank-score {
       font-size: 17px;
       font-weight: 900;
-      color: var(--pink);
+      color: var(--cyan);
       flex-shrink: 0;
     }
+
+    /* ── Picks section ── */
+    .picks-section { margin-top: 28px; }
+
+    .picks-card {
+      background: rgba(255 255 255 / 0.11);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255 255 255 / 0.22);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .picks-title {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      padding: 18px 22px 16px;
+      color: var(--text);
+      border-bottom: 1px solid rgba(255 255 255 / 0.10);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-dl-btn {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 6px 14px;
+      background: rgba(255 255 255 / 0.08);
+      border: 1.5px solid rgba(255 255 255 / 0.18);
+      border-radius: 8px;
+      color: var(--text-sub);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      flex-shrink: 0;
+    }
+    .card-dl-btn:hover { background: rgba(255 255 255 / 0.16); border-color: var(--cyan); color: var(--text); }
+
+    .pick-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 13px 22px;
+      border-bottom: 1px solid rgba(255 255 255 / 0.07);
+    }
+    .pick-row:last-child { border-bottom: none; }
+
+    .pick-row.winner-row {
+      background: rgba(255 215 0 / 0.08);
+      border-top: 1px solid rgba(255 215 0 / 0.25);
+      padding: 16px 22px;
+    }
+
+    .pick-label {
+      font-size: 13px;
+      font-weight: 800;
+      font-style: italic;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text);
+      flex-shrink: 0;
+    }
+
+    .pick-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      min-width: 175px;
+      justify-content: space-between;
+      background: rgba(255 255 255 / 0.07);
+      border: 1.5px solid rgba(255 255 255 / 0.18);
+      border-radius: 10px;
+      color: var(--text-dim);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .pick-btn:hover { border-color: var(--cyan); background: rgba(0 212 245 / 0.10); color: var(--text); }
+    .pick-btn.has-value { color: var(--text); border-color: rgba(255 255 255 / 0.32); }
+    .winner-row .pick-btn { border-color: rgba(255 215 0 / 0.35); }
+    .winner-row .pick-btn:hover { border-color: var(--gold); background: rgba(255 215 0 / 0.10); }
+    .winner-row .pick-btn.has-value { border-color: rgba(255 215 0 / 0.65); color: var(--gold); }
+
+    .pick-btn-inner { display: flex; align-items: center; gap: 7px; }
+    .pick-chevron { color: var(--text-dim); font-size: 11px; margin-left: 4px; }
+
+    .pick-expanded {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 10px 22px 14px;
+    }
+    .pick-expanded:empty { display: none; }
+
+    .pick-expanded-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 12px;
+      background: rgba(255 255 255 / 0.06);
+      border: 1px solid rgba(255 255 255 / 0.08);
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .pick-expanded-flag { font-size: 20px; line-height: 1; }
+    .pick-expanded-artist { font-size: 11px; color: var(--text-dim); margin-left: auto; font-style: italic; }
+
+    /* ── Country picker popup ── */
+    .cpicker {
+      position: fixed;
+      z-index: 101;
+      background: rgba(14 6 40 / 0.97);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255 255 255 / 0.16);
+      border-radius: 14px;
+      box-shadow: 0 16px 48px rgba(0 0 0 / 0.65);
+      display: none;
+      flex-direction: column;
+      width: 300px;
+      max-height: 440px;
+    }
+    .cpicker.open { display: flex; }
+
+    .cpicker-header {
+      padding: 11px 14px 9px;
+      border-bottom: 1px solid rgba(255 255 255 / 0.08);
+      font-size: 9px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text-dim);
+      flex-shrink: 0;
+    }
+
+    .cpicker-list { overflow-y: auto; flex: 1; }
+
+    .cpicker-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 14px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255 255 255 / 0.04);
+      transition: background 0.12s;
+    }
+    .cpicker-item:last-child { border-bottom: none; }
+    .cpicker-item:hover { background: rgba(255 255 255 / 0.07); }
+    .cpicker-item.selected { background: rgba(0 212 245 / 0.12); }
+    .winner-mode .cpicker-item.selected { background: rgba(255 215 0 / 0.12); }
+
+    .cpicker-num  { font-size: 10px; color: var(--text-dim); font-weight: 700; min-width: 22px; }
+    .cpicker-flag { font-size: 20px; line-height: 1; }
+    .cpicker-info { flex: 1; min-width: 0; }
+    .cpicker-name { font-size: 13px; font-weight: 700; }
+    .cpicker-artist { font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cpicker-check { color: var(--cyan); font-size: 15px; flex-shrink: 0; }
+    .winner-mode .cpicker-check { color: var(--gold); }
+
+    .cpicker-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 9px 14px;
+      border-top: 1px solid rgba(255 255 255 / 0.08);
+      flex-shrink: 0;
+    }
+    .cpicker-count { font-size: 11px; color: var(--text-dim); }
+    .cpicker-confirm {
+      padding: 5px 16px;
+      background: var(--cyan); border: none; border-radius: 7px;
+      font-size: 12px; font-weight: 800; color: #080618; cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .cpicker-confirm:disabled { opacity: 0.35; cursor: default; }
   </style>
 </head>
 <body>
@@ -499,10 +664,29 @@
   </div>
 
   <div class="rankings-section" id="rankings-section" style="display:none">
-    <div class="section-title">Мій рейтинг</div>
-    <div class="rankings-grid" id="rankings-grid"></div>
+    <div class="picks-card">
+      <div class="picks-title">МІЙ РЕЙТИНГ <button class="card-dl-btn" id="btn-dl-ranking">📸 Зображення</button></div>
+      <div class="rankings-grid" id="rankings-grid"></div>
+    </div>
   </div>
 
+  <div class="picks-section">
+    <div class="picks-card" id="picks-card">
+      <div class="picks-title">ОТЖЕ <button class="card-dl-btn" id="btn-dl-picks">📸 Зображення</button></div>
+      <!-- rows injected by JS -->
+    </div>
+  </div>
+
+</div>
+
+<!-- Country picker popup -->
+<div id="cpicker" class="cpicker" role="dialog">
+  <div class="cpicker-header" id="cpicker-header"></div>
+  <div class="cpicker-list" id="cpicker-list"></div>
+  <div class="cpicker-footer" id="cpicker-footer" style="display:none">
+    <span class="cpicker-count" id="cpicker-count"></span>
+    <button class="cpicker-confirm" id="cpicker-confirm">Готово</button>
+  </div>
 </div>
 
 <!-- Rating popup -->
@@ -549,7 +733,7 @@
   // Emojis with their numeric score equivalent
   const EMOJI_OPTIONS = [
     { e:'💀', v:0  },
-    { e:'🤯', v:11 },
+    { e:'🤯', v:10 },
     { e:'🕊️', v:7  },
     { e:'🌭', v:4  },
     { e:'🤡', v:1  },
@@ -741,6 +925,326 @@
   }
 
   updateRankings();
+
+  // ── Personal picks ──
+  const PICK_DEFS = [
+    { id:'cringe',    label:'НАЙБІЛЬШ КРІНЖОВИЙ ВИСТУП', multi:false },
+    { id:'best_perf', label:'НАЙКРАЩИЙ ВИСТУП',          multi:false },
+    { id:'best_song', label:'НАЙКРАЩА ПІСНЯ',            multi:false },
+    { id:'top5',      label:'ХТО ПРОЙДЕ В ТОП 5',       multi:true, max:5 },
+    { id:'winner',    label:'ПЕРЕМОЖЕЦЬ',                multi:false, winner:true },
+  ];
+
+  const PICKS_KEY = 'esc2026_picks';
+  let picks = {};
+  try { picks = JSON.parse(localStorage.getItem(PICKS_KEY)) || {}; } catch {}
+  function savePicks() { localStorage.setItem(PICKS_KEY, JSON.stringify(picks)); }
+
+  // Build pick rows
+  const picksCard = document.getElementById('picks-card');
+  PICK_DEFS.forEach(def => {
+    const row = document.createElement('div');
+    row.className = 'pick-row' + (def.winner ? ' winner-row' : '');
+    row.innerHTML = `
+      <div class="pick-label">${def.label}:</div>
+      <button class="pick-btn${hasPick(def) ? ' has-value' : ''}" data-pick="${def.id}">
+        <span class="pick-btn-inner">${renderPickLabel(def)}</span>
+        <span class="pick-chevron">▾</span>
+      </button>
+    `;
+    picksCard.appendChild(row);
+
+    if (def.multi) {
+      const expanded = document.createElement('div');
+      expanded.className = 'pick-expanded';
+      expanded.id = `pick-expanded-${def.id}`;
+      expanded.innerHTML = renderExpandedPicks(def);
+      picksCard.appendChild(expanded);
+    }
+  });
+
+  function hasPick(def) {
+    const v = picks[def.id];
+    return def.multi ? (v && v.length > 0) : (v != null && v !== '');
+  }
+
+  function renderPickLabel(def) {
+    const val = picks[def.id];
+    if (def.multi) {
+      const arr = val || [];
+      if (!arr.length) return '— оберіть —';
+      return `${arr.map(i => COUNTRIES[i].flag).join(' ')}<span style="color:var(--text-dim);font-size:11px;margin-left:5px">${arr.length}/${def.max}</span>`;
+    }
+    if (val == null || val === '') return '— оберіть —';
+    const c = COUNTRIES[val];
+    return `<span style="font-size:18px;line-height:1">${c.flag}</span>&nbsp;${c.name}`;
+  }
+
+  function renderExpandedPicks(def) {
+    const arr = picks[def.id] || [];
+    return arr.map(i => {
+      const c = COUNTRIES[i];
+      return `<div class="pick-expanded-item">
+        <span class="pick-expanded-flag">${c.flag}</span>
+        <span>${c.name}</span>
+        <span class="pick-expanded-artist">${c.artist}</span>
+      </div>`;
+    }).join('');
+  }
+
+  function refreshPickBtn(def) {
+    const btn = picksCard.querySelector(`[data-pick="${def.id}"]`);
+    if (!btn) return;
+    btn.querySelector('.pick-btn-inner').innerHTML = renderPickLabel(def);
+    btn.classList.toggle('has-value', hasPick(def));
+    if (def.multi) {
+      const expanded = document.getElementById(`pick-expanded-${def.id}`);
+      if (expanded) expanded.innerHTML = renderExpandedPicks(def);
+    }
+  }
+
+  // Country picker popup
+  const cpicker        = document.getElementById('cpicker');
+  const cpickerHeader  = document.getElementById('cpicker-header');
+  const cpickerList    = document.getElementById('cpicker-list');
+  const cpickerFooter  = document.getElementById('cpicker-footer');
+  const cpickerCount   = document.getElementById('cpicker-count');
+  const cpickerConfirm = document.getElementById('cpicker-confirm');
+  let activeDef = null;
+  let multiSel  = [];
+
+  function openCpicker(btn, def) {
+    activeDef = def;
+    multiSel  = def.multi ? [...(picks[def.id] || [])] : [];
+    cpickerHeader.textContent = def.label;
+    cpicker.classList.toggle('winner-mode', !!def.winner);
+    renderCpickerList();
+    cpickerFooter.style.display = def.multi ? 'flex' : 'none';
+    cpicker.classList.add('open');
+    repositionCpicker(btn);
+  }
+
+  function renderCpickerList() {
+    cpickerList.innerHTML = COUNTRIES.map((c, i) => {
+      const isSel = activeDef.multi ? multiSel.includes(i) : picks[activeDef.id] === i;
+      return `<div class="cpicker-item${isSel ? ' selected' : ''}" data-idx="${i}">
+        <span class="cpicker-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="cpicker-flag">${c.flag}</span>
+        <div class="cpicker-info">
+          <div class="cpicker-name">${c.name}</div>
+          <div class="cpicker-artist">${c.artist}</div>
+        </div>
+        ${isSel ? '<span class="cpicker-check">✓</span>' : ''}
+      </div>`;
+    }).join('');
+    if (activeDef.multi) updateCpickerCount();
+  }
+
+  function updateCpickerCount() {
+    cpickerCount.textContent = `${multiSel.length} / ${activeDef.max} обрано`;
+    cpickerConfirm.disabled = multiSel.length === 0;
+  }
+
+  function closeCpicker() { cpicker.classList.remove('open'); activeDef = null; }
+
+  function repositionCpicker(btn) {
+    const r  = btn.getBoundingClientRect();
+    const pw = 300;
+    const ph = Math.min(440, innerHeight - 32);
+    const gap = 8;
+    let top  = r.top - ph - gap;
+    let left = r.right - pw;
+    if (top < gap) top = r.bottom + gap;
+    if (top + ph > innerHeight - gap) top = innerHeight - ph - gap;
+    left = Math.max(gap, Math.min(left, innerWidth - pw - gap));
+    cpicker.style.top    = top  + 'px';
+    cpicker.style.left   = left + 'px';
+    cpicker.style.height = ph   + 'px';
+  }
+
+  picksCard.addEventListener('click', e => {
+    const btn = e.target.closest('.pick-btn');
+    if (!btn) return;
+    const def = PICK_DEFS.find(d => d.id === btn.dataset.pick);
+    if (!def) return;
+    if (cpicker.classList.contains('open') && activeDef === def) { closeCpicker(); return; }
+    openCpicker(btn, def);
+  });
+
+  cpickerList.addEventListener('click', e => {
+    const item = e.target.closest('.cpicker-item');
+    if (!item) return;
+    const idx = +item.dataset.idx;
+    if (activeDef.multi) {
+      const pos = multiSel.indexOf(idx);
+      if (pos >= 0) multiSel.splice(pos, 1);
+      else if (multiSel.length < activeDef.max) multiSel.push(idx);
+      else return;
+      renderCpickerList();
+    } else {
+      picks[activeDef.id] = idx;
+      savePicks();
+      refreshPickBtn(activeDef);
+      closeCpicker();
+    }
+  });
+
+  cpickerConfirm.addEventListener('click', () => {
+    picks[activeDef.id] = [...multiSel];
+    savePicks();
+    refreshPickBtn(activeDef);
+    closeCpicker();
+  });
+
+  cpicker.addEventListener('click', e => e.stopPropagation());
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.pick-btn')) closeCpicker();
+  });
+
+  // ── Image generation ──
+  const EMOJI_FONT = '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
+  const TEXT_FONT  = '"Segoe UI",system-ui,sans-serif';
+
+  function canvasBg(ctx, W, H, pinkLeft) {
+    const g = ctx.createLinearGradient(0, 0, W, H);
+    g.addColorStop(0, '#1d0a48'); g.addColorStop(0.6, '#2d0d5e'); g.addColorStop(1, '#150830');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+    const a = ctx.createRadialGradient(pinkLeft ? 0 : W, 0, 0, pinkLeft ? 0 : W, 0, W * 0.7);
+    a.addColorStop(0, pinkLeft ? 'rgba(255,148,198,0.22)' : 'rgba(130,215,255,0.18)');
+    a.addColorStop(1, 'transparent');
+    ctx.fillStyle = a;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  function canvasHeader(ctx, W, PAD, subtitle, title) {
+    ctx.globalAlpha = 0.35; ctx.fillStyle = '#ffffff';
+    ctx.font = `12px ${TEXT_FONT}`;
+    ctx.fillText(subtitle, PAD, 30);
+    ctx.globalAlpha = 1; ctx.fillStyle = '#ffffff';
+    ctx.font = `bold 28px ${TEXT_FONT}`;
+    ctx.fillText(title, PAD, 62);
+    ctx.globalAlpha = 0.12; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(PAD, 80); ctx.lineTo(W - PAD, 80); ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  function dlCanvas(canvas, name) {
+    const a = document.createElement('a');
+    a.download = name; a.href = canvas.toDataURL('image/png'); a.click();
+  }
+
+  function generateRankingImage() {
+    const ranked = COUNTRIES
+      .map((c, idx) => ({ ...c, idx, total: rowTotal(idx) }))
+      .filter(c => c.total > 0)
+      .sort((a, b) => b.total - a.total);
+    if (!ranked.length) { alert('Додайте оцінки, щоб згенерувати зображення'); return; }
+
+    const SC = 2, W = 580, PAD = 28, ROW = 54, HDR = 102, FOOT = 28;
+    const H = HDR + ranked.length * ROW + FOOT;
+    const cv = document.createElement('canvas');
+    cv.width = W * SC; cv.height = H * SC;
+    const ctx = cv.getContext('2d');
+    ctx.scale(SC, SC);
+
+    canvasBg(ctx, W, H, true);
+    canvasHeader(ctx, W, PAD, 'EUROVISION 2026 · ВІДЕНЬ', 'МІЙ РЕЙТИНГ');
+
+    const MEDALS = ['🥇','🥈','🥉'];
+    ranked.forEach((c, pos) => {
+      const y = HDR + pos * ROW, cy = y + ROW / 2;
+      if (pos % 2 === 0) { ctx.fillStyle = 'rgba(255,255,255,0.035)'; ctx.fillRect(0, y, W, ROW); }
+
+      if (pos < 3) {
+        ctx.globalAlpha = 1;
+        ctx.font = `20px ${EMOJI_FONT}`; ctx.fillText(MEDALS[pos], PAD - 2, cy + 7);
+      } else {
+        ctx.globalAlpha = 0.32; ctx.fillStyle = '#ffffff'; ctx.font = `bold 12px ${TEXT_FONT}`;
+        ctx.fillText(`${pos + 1}.`, PAD + 2, cy + 5);
+      }
+
+      ctx.globalAlpha = 1;
+      ctx.font = `22px ${EMOJI_FONT}`; ctx.fillText(c.flag, PAD + 36, cy + 8);
+      ctx.fillStyle = '#ffffff'; ctx.font = `bold 15px ${TEXT_FONT}`; ctx.fillText(c.name, PAD + 74, cy + 1);
+      ctx.globalAlpha = 0.42; ctx.fillStyle = '#ffffff'; ctx.font = `12px ${TEXT_FONT}`; ctx.fillText(c.artist, PAD + 74, cy + 17);
+      ctx.globalAlpha = 1; ctx.fillStyle = '#ff2d78'; ctx.font = `bold 22px ${TEXT_FONT}`;
+      const sw = ctx.measureText(String(c.total)).width;
+      ctx.fillText(String(c.total), W - PAD - sw, cy + 8);
+    });
+
+    dlCanvas(cv, 'my-rating-esc2026.png');
+  }
+
+  function generatePicksImage() {
+    let contentH = 0;
+    PICK_DEFS.forEach(def => {
+      contentH += 28;
+      if (def.multi) contentH += Math.max(1, (picks[def.id] || []).length) * 34 + 4;
+      else           contentH += 38;
+      contentH += 18;
+    });
+
+    const SC = 2, W = 580, PAD = 28, HDR = 102, FOOT = 28;
+    const H = HDR + contentH + FOOT;
+    const cv = document.createElement('canvas');
+    cv.width = W * SC; cv.height = H * SC;
+    const ctx = cv.getContext('2d');
+    ctx.scale(SC, SC);
+
+    canvasBg(ctx, W, H, false);
+    canvasHeader(ctx, W, PAD, 'EUROVISION 2026 · ВІДЕНЬ', 'ОТЖЕ');
+
+    let y = HDR + 12;
+    PICK_DEFS.forEach(def => {
+      ctx.globalAlpha = 0.42; ctx.fillStyle = '#ffffff';
+      ctx.font = `italic bold 10px ${TEXT_FONT}`;
+      ctx.fillText(def.label + ':', PAD, y);
+      ctx.globalAlpha = 1;
+      y += 22;
+
+      if (def.multi) {
+        const arr = picks[def.id] || [];
+        if (!arr.length) {
+          ctx.globalAlpha = 0.22; ctx.fillStyle = '#ffffff'; ctx.font = `14px ${TEXT_FONT}`;
+          ctx.fillText('— не обрано —', PAD + 4, y + 8); y += 34;
+        } else {
+          arr.forEach(i => {
+            const c = COUNTRIES[i];
+            ctx.globalAlpha = 1;
+            ctx.font = `18px ${EMOJI_FONT}`; ctx.fillText(c.flag, PAD, y + 4);
+            ctx.fillStyle = '#ffffff'; ctx.font = `bold 14px ${TEXT_FONT}`; ctx.fillText(c.name, PAD + 30, y + 2);
+            ctx.globalAlpha = 0.38; ctx.fillStyle = '#ffffff'; ctx.font = `11px ${TEXT_FONT}`; ctx.fillText(c.artist, PAD + 30, y + 16);
+            y += 34;
+          });
+        }
+      } else {
+        const val = picks[def.id];
+        if (val == null || val === '') {
+          ctx.globalAlpha = 0.22; ctx.fillStyle = '#ffffff'; ctx.font = `14px ${TEXT_FONT}`;
+          ctx.fillText('— не обрано —', PAD + 4, y + 8);
+        } else {
+          const c = COUNTRIES[val];
+          ctx.globalAlpha = 1;
+          ctx.font = `22px ${EMOJI_FONT}`; ctx.fillText(c.flag, PAD, y + 8);
+          ctx.fillStyle = def.winner ? '#ffd700' : '#ffffff';
+          ctx.font = `bold ${def.winner ? 18 : 15}px ${TEXT_FONT}`; ctx.fillText(c.name, PAD + 34, y + 4);
+          ctx.globalAlpha = 0.38; ctx.fillStyle = '#ffffff'; ctx.font = `11px ${TEXT_FONT}`; ctx.fillText(c.artist, PAD + 34, y + 19);
+        }
+        y += 38;
+      }
+
+      ctx.globalAlpha = 0.07; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(PAD, y + 4); ctx.lineTo(W - PAD, y + 4); ctx.stroke();
+      y += 18;
+    });
+
+    dlCanvas(cv, 'my-picks-esc2026.png');
+  }
+
+  document.getElementById('btn-dl-ranking')?.addEventListener('click', generateRankingImage);
+  document.getElementById('btn-dl-picks')  ?.addEventListener('click', generatePicksImage);
 
 </script>
 </body>
