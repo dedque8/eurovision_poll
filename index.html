@@ -597,6 +597,36 @@
       transition: opacity 0.15s;
     }
     .cpicker-confirm:disabled { opacity: 0.35; cursor: default; }
+
+    /* ── Links row ── */
+    .memes-section {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .memes-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border: 1px solid rgba(255 255 255 / 0.12);
+      border-radius: 10px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .memes-link:hover {
+      border-color: rgba(255 255 255 / 0.28);
+      color: var(--text);
+      background: rgba(255 255 255 / 0.05);
+    }
+    .donate-link { border-color: rgba(180 230 100 / 0.22); color: rgba(180 230 100 / 0.75); }
+    .donate-link:hover { border-color: rgba(180 230 100 / 0.55); color: rgb(180 230 100); background: rgba(180 230 100 / 0.07); }
+    .memes-arrow { font-size: 15px; opacity: 0.6; }
   </style>
 </head>
 <body>
@@ -625,6 +655,17 @@
     <div class="logo-sub">Song Contest</div>
     <div class="logo-city">Відень · 16 травня 2026 · Гранд-фінал</div>
   </header>
+
+  <div class="memes-section">
+    <a class="memes-link" href="https://drive.google.com/file/d/1QnBtOWoFDaTwarsw-nmVQt7DcgwTSug9/view" target="_blank" rel="noopener">
+      <span>Шаблон з мемами 😉</span>
+      <span class="memes-arrow">↗</span>
+    </a>
+    <a class="memes-link donate-link" href="https://send.monobank.ua/jar/7kjCnLu9hX" target="_blank" rel="noopener">
+      <span>Донат на ЗСУ</span>
+      <span class="memes-arrow">↗</span>
+    </a>
+  </div>
 
   <div class="table-outer">
     <table id="main-table">
