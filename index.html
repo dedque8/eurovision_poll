@@ -4,24 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Eurovision 2026 — Моє голосування</title>
+  <link rel="stylesheet" href="theme.css" />
   <style>
-    :root {
-      --bg1: #0d0a2e;
-      --bg2: #2a0d5e;
-      --bg3: #1a0a40;
-      --surface: rgba(255 255 255 / 0.05);
-      --surface-hover: rgba(255 255 255 / 0.09);
-      --border: rgba(255 255 255 / 0.10);
-      --border-strong: rgba(255 255 255 / 0.20);
-      --text: #ffffff;
-      --text-sub: rgba(255 255 255 / 0.65);
-      --text-dim: rgba(255 255 255 / 0.38);
-      --cyan: #00d4f5;
-      --pink: #ff2d78;
-      --gold: #ffd700;
-      --input-bg: rgba(255 255 255 / 0.07);
-      --input-focus: rgba(0 212 245 / 0.18);
-    }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -698,46 +682,9 @@
   <button class="popup-clear" id="popup-clear">✕ Прибрати оцінку</button>
 </div>
 
+<script src="data/countries.js"></script>
+<script src="data/config.js"></script>
 <script>
-  const COUNTRIES = [
-    { flag:'🇩🇰', name:'Данія',            artist:'Søren Torpegaard Lund',             song:'"Før vi går hjem"'       },
-    { flag:'🇩🇪', name:'Німеччина',         artist:'Sarah Engels',                      song:'"Fire"'                  },
-    { flag:'🇮🇱', name:'Ізраїль',           artist:'Noam Bettan',                       song:'"Michelle"'              },
-    { flag:'🇧🇪', name:'Бельгія',           artist:'Essyla',                            song:'"Dancing on the Ice"'    },
-    { flag:'🇦🇱', name:'Албанія',           artist:'Alis',                              song:'"Nân"'                   },
-    { flag:'🇬🇷', name:'Греція',            artist:'Akylas',                            song:'"Ferto"'                 },
-    { flag:'🇺🇦', name:'Україна',           artist:'Leléka',                            song:'"Ridnym"'                },
-    { flag:'🇦🇺', name:'Австралія',         artist:'Delta Goodrem',                     song:'"Eclipse"'               },
-    { flag:'🇷🇸', name:'Сербія',            artist:'Lavina',                            song:'"Kraj mene"'             },
-    { flag:'🇲🇹', name:'Мальта',            artist:'Aidan',                             song:'"Bella"'                 },
-    { flag:'🇨🇿', name:'Чехія',             artist:'Daniel Žižka',                      song:'"Crossroads"'            },
-    { flag:'🇧🇬', name:'Болгарія',          artist:'Dara',                              song:'"Bangaranga"'            },
-    { flag:'🇭🇷', name:'Хорватія',          artist:'Lelek',                             song:'"Andromeda"'             },
-    { flag:'🇬🇧', name:'Велика Британія',   artist:'Look Mum No Computer',              song:'"Eins, Zwei, Drei"'      },
-    { flag:'🇫🇷', name:'Франція',           artist:'Monroe',                            song:'"Regarde !"'             },
-    { flag:'🇲🇩', name:'Молдова',           artist:'Satoshi',                           song:'"Viva, Moldova"'         },
-    { flag:'🇫🇮', name:'Фінляндія',         artist:'Linda Lampenius & Pete Parkkonen',  song:'"Liekinheitin"'          },
-    { flag:'🇵🇱', name:'Польща',            artist:'Alicja',                            song:'"Pray"'                  },
-    { flag:'🇱🇹', name:'Литва',             artist:'Lion Ceccah',                       song:'"Sólo quiero más"'       },
-    { flag:'🇸🇪', name:'Швеція',            artist:'Felicia',                           song:'"My System"'             },
-    { flag:'🇨🇾', name:'Кіпр',              artist:'Antigoni',                          song:'"Jalla"'                 },
-    { flag:'🇮🇹', name:'Італія',            artist:'Sal Da Vinci',                      song:'"Per sempre sì"'         },
-    { flag:'🇳🇴', name:'Норвегія',          artist:'Jonas Lovv',                        song:'"Ya ya ya"'              },
-    { flag:'🇷🇴', name:'Румунія',           artist:'Alexandra Căpitănescu',             song:'"Choke Me"'              },
-    { flag:'🇦🇹', name:'Австрія',           artist:'Cosmó',                             song:'"Tanzschein"'            },
-  ];
-
-  const CRITERIA    = ['vocal', 'image', 'perf', 'score'];
-  const CRIT_LABELS = { vocal:'Вокал', image:'Образ', perf:'Номер', score:'Оцінка' };
-
-  // Emojis with their numeric score equivalent
-  const EMOJI_OPTIONS = [
-    { e:'💀', v:0  },
-    { e:'🤯', v:10 },
-    { e:'🕊️', v:7  },
-    { e:'🌭', v:4  },
-    { e:'🤡', v:1  },
-  ];
   const EMOJI_SCORE = Object.fromEntries(EMOJI_OPTIONS.map(o => [o.e, o.v]));
 
   const STORAGE_KEY = 'esc2026_votes';
@@ -927,14 +874,6 @@
   updateRankings();
 
   // ── Personal picks ──
-  const PICK_DEFS = [
-    { id:'cringe',    label:'НАЙБІЛЬШ КРІНЖОВИЙ ВИСТУП', multi:false },
-    { id:'best_perf', label:'НАЙКРАЩИЙ ВИСТУП',          multi:false },
-    { id:'best_song', label:'НАЙКРАЩА ПІСНЯ',            multi:false },
-    { id:'top5',      label:'ХТО ПРОЙДЕ В ТОП 5',       multi:true, max:5 },
-    { id:'winner',    label:'ПЕРЕМОЖЕЦЬ',                multi:false, winner:true },
-  ];
-
   const PICKS_KEY = 'esc2026_picks';
   let picks = {};
   try { picks = JSON.parse(localStorage.getItem(PICKS_KEY)) || {}; } catch {}
